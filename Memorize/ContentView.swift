@@ -27,25 +27,32 @@ struct ContentView: View {
             Spacer()
             //cardCountAdjusters
             HStack(spacing: 40, content: {
-                buttomThemeSelector(type: 1, label: "🎃")
-                buttomThemeSelector(type: 2, label: "🎄")
-                buttomThemeSelector(type: 3, label: "🐶")
+                buttomThemeSelector(type: 1, label: "Halloween", icon: "🎃")
+                buttomThemeSelector(type: 2, label: "Christmas", icon: "🎄")
+                buttomThemeSelector(type: 3, label: "Cute Animal", icon: "🐶")
             })
         }
         .padding(20)
     }
     
-    func buttomThemeSelector(type: Int, label: String) -> some View {
+    func buttomThemeSelector(type: Int, label: String, icon: String) -> some View {
         Button(action: {
             selectedTypeEmojis = type
-            selectedEmojis = selectedTypeEmojis == 1 ? halloweenEmojis : selectedTypeEmojis == 2 ? christmasEmojis : animalEmojis
-            selectedEmojis = selectedEmojis + selectedEmojis
-            selectedEmojis = selectedEmojis.shuffled()
-            print(selectedEmojis)
+            changeEmojiTheme()
         }, label: {
-            Text(label)
+            VStack {
+                Text(icon)
+                Text(label).font(.caption)
+            }
         }).font(.largeTitle)
+            .padding(4)
             .border(selectedTypeEmojis == type ? Color.black : Color.white)
+    }
+    
+    func changeEmojiTheme() -> Void {
+        selectedEmojis = selectedTypeEmojis == 1 ? halloweenEmojis : selectedTypeEmojis == 2 ? christmasEmojis : animalEmojis
+        selectedEmojis = selectedEmojis + selectedEmojis
+        selectedEmojis = selectedEmojis.shuffled()
     }
     
     func cards(emojis: [String]) -> some View {
